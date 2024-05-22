@@ -308,7 +308,21 @@ def loader(dataset, dirs="./cifar10", trn_batch_size=64, val_batch_size=64, tst_
 
 #     trainset, valset = random_split(fullset, [num_trn, num_val], generator=torch.Generator().manual_seed(seed))
 
+    elif dataset.lower() == "medmnist":
+        
+        dataset=ImageFolder(dirs,ToTensor())
+        fullset,testset=torch.utils.data.random_split(dataset,[50000,8954])
+
+    # Dermamnist
+    elif dataset.lower() == "dermamnist":
     
+        traindir = os.path.join(dirs, 'train')
+        valdir = os.path.join(dirs, 'test')
+    
+    
+        fullset = ImageFolder(traindir,ToTensor())
+
+        testset = ImageFolder(valdir,ToTensor())
     # Creating the Data Loaders
     trainloader = torch.utils.data.DataLoader(fullset, batch_size=trn_batch_size,
                                               shuffle=False, pin_memory=True, num_workers=1)
